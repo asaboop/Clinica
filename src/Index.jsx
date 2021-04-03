@@ -2,6 +2,8 @@ import React, {useState} from "react"
 import { Accordion, Card, Tabs, Tab } from 'react-bootstrap'
 import Owlcarousel from 'react-owl-carousel'  
 import Axios from "axios"
+import "./assets/css/style.css"
+import {Link} from "react-router-dom"
 
 function Index (){
 
@@ -10,10 +12,7 @@ function Index (){
   const [lastName, setLastName] = useState("")
   const [telefono, setTelefono] = useState("")
 
-  //NUEVAS
-  const [day, setDay] = useState("")
-  const [hora, setHora] = useState("")
-  const [mensaje, setMensaje] = useState("Elija un horario")
+
   
   const handleForm = (e) => {
     
@@ -23,57 +22,22 @@ function Index (){
       dni: dni,
       name: name,
       lastName: lastName,
-      telefono: telefono,
-      dia: day,
-      horario: hora
+      telefono: telefono
     };
-    Axios.post("http://localhost:8080/pacientes", data).then((res) => {
+    Axios.post("https://backend-clinica2331.herokuapp.com/validacion", data).then((res) => {
       console.log(res.data);
     });
   };
 
-  const testFunction = (e) =>{
-    e.preventDefault()
-
-    const data = {
-      dni: dni,
-      name: name,
-      lastName: lastName,
-      telefono: telefono,
-      dia: day,
-      horario: hora
-    };
-
-    Axios.post("http://localhost:8080/horarios", data ).then((res)=>{
-      console.log(res.data)
-    })
-  }
-
-  const validarHorario = () =>{
-
-    const data = {
-      dni: dni,
-      dia: day,
-      horario: hora
-    };
-
-    Axios.post("http://localhost:8080/horarios", data ).then((res)=>{
-      console.log(res.data)
-      setMensaje('Citas disponibles : ' + res.data.pacientes )
-    })
-
-    console.log('aea')
-    
-  }
 
   return(
 
 <div className="index">
   <header id="header" className="fixed-top">
     <div className="container d-flex align-items-center">
-      <h1 className="logo me-auto"><a href="">Clinica San Andrés<span></span></a></h1>
+      <h1 className="logo me-auto"><a href="/#">Clinica San Andrés<span></span></a></h1>
       
-      <a href="" className="logo me-auto" ><img src="/assets/img/logo.png" alt=""/></a>
+      <a href="/#" className="logo me-auto" ><img src="/assets/img/logo.png" alt=""/></a>
 
       <nav className="nav-menu d-none d-lg-block">
         <ul>
@@ -85,8 +49,7 @@ function Index (){
           <li><a href="#contact">Contáctanos</a></li>
         </ul>
       </nav>
-
-      <a href="#about" className="get-started-btn scrollto">Reserva tu Cita</a>
+      
     </div>
   </header>
 
@@ -97,7 +60,7 @@ function Index (){
         <div className="col-xl-6">
           <h1>La Primera Clínica de Huaral </h1>
           <h2>Comprometidos con tu bienestar.</h2>
-          <a href="#about" className="btn-get-started scrollto">Reserva tu prueba COVID-19</a>
+          <Link to="/cita" className="btn-get-started scrollto">Reserva tu prueba COVID-19</Link>
         </div>
       </div>
     </div>
@@ -517,34 +480,7 @@ function Index (){
                   />
                 </div>
               </div>
-              <p>{"\n"}</p>
               <div className="row">
-              <div className="col-6 form-group">
-                <p>{mensaje}</p>
-                <select className="form-control" name="horario" id="hora" onChange={(e)=>{
-                  setHora(e.target.value)
-                  validarHorario()
-                }}>
-                  <option value="">--Escoga un rango horario--</option>
-                  <option value="9-10">09:00-10:00</option>
-                  <option value="10-11">10:00-11:00</option>
-                  <option value="11-12">11:00-12:00</option>
-                  <option value="13-14">13:00-14:00</option>
-                  <option value="14-15">14:00-15:00</option>
-                  <option value="15-16">15:00-16:00</option>
-                  <option value="16-17">16:00-17:00</option>
-                  <option value="17-18">17:00-18:00</option>
-                  <option value="18-19">18:00-19:00</option>
-                  <option value="19-20">19:00-20:00</option>
-                  <option value="20-21">20:00-21:00</option>
-                  <option value="21-22">21:00-22:00</option>
-                </select>
-              </div>
-                
-              <div className="col-6 form-group">
-              <p>{"\n"}</p>
-                <input className="form-control" type="date" onChange={(e)=>{setDay(e.target.value)}}/>
-              </div>
               
               <div className="text-center">
                 
